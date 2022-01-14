@@ -18,31 +18,36 @@ public class SandwichController {
     }
     
     @PostMapping(value = "/sandwich")
-    public String selectedCondiments(@RequestParam(name = "lettuce", required = false) String lettuce,
-                                     @RequestParam(name = "tomato", required = false) String tomato,
-                                     @RequestParam(name = "mustard", required = false) String mustard,
-                                     @RequestParam(name = "sprouts", required = false) String sprouts,
+    public String selectedCondiments(
+                                     @RequestParam(name = "condiments", required = false) String[] condiments,
+//                                     @RequestParam(name = "tomato", required = false) String tomato,
+//                                     @RequestParam(name = "mustard", required = false) String mustard,
+//                                     @RequestParam(name = "sprouts", required = false) String sprouts,
                                      Model model
     ) {
-        List<String> condiments = new ArrayList<>();
-        
-        if (lettuce != null)
-            condiments.add(lettuce);
+//        List<String> condiments = new ArrayList<>();
+
+//        for (String condiment: condiments) {
+//            System.out.println(condiment);
+//        }
+
+//        if (lettuce != null)
+//            condiments.add(lettuce);
 //            model.addAttribute("lettuce",lettuce);
 //        System.out.println(lettuce);
 
-        if (tomato != null)
-            condiments.add(tomato);
+//        if (tomato != null)
+//            condiments.add(tomato);
 //            model.addAttribute("tomato",tomato);
 //        System.out.println(tomato);
 
-        if (mustard != null)
-            condiments.add(mustard);
+//        if (mustard != null)
+//            condiments.add(mustard);
 //            model.addAttribute("mustard",mustard);
 //        System.out.println(mustard);
 
-        if (sprouts != null)
-            condiments.add(sprouts);
+//        if (sprouts != null)
+//            condiments.add(sprouts);
 //            model.addAttribute("sprouts",sprouts);
 //        System.out.println(sprouts);
         

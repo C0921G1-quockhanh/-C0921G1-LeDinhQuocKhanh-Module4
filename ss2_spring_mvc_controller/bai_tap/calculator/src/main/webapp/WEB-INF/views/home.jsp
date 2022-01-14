@@ -32,10 +32,10 @@
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-secondary" value="Addition" name="Addition">Addition</button>
-            <button type="submit" class="btn btn-secondary ms-4" value="Subtraction" name="Subtraction">Subtraction</button>
-            <button type="submit" class="btn btn-secondary ms-4" value="Multiplication" name="Multiplication">Multiplication</button>
-            <button type="submit" class="btn btn-secondary ms-4" value="Division" name="Division">Division</button>
+            <button type="submit" class="btn btn-secondary" value="Addition" name="calculate">Addition</button>
+            <button type="submit" class="btn btn-secondary ms-4" value="Subtraction" name="calculate">Subtraction</button>
+            <button type="submit" class="btn btn-secondary ms-4" value="Multiplication" name="calculate">Multiplication</button>
+            <button type="submit" class="btn btn-secondary ms-4" value="Division" name="calculate">Division</button>
         </div>
 
     </form>

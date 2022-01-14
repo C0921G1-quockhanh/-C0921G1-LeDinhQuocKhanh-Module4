@@ -17,25 +17,44 @@ public class CalculatorController {
     @PostMapping("/calculate")
     public String showResult(@RequestParam(name = "firstOperand") double firstOperand,
                              @RequestParam(name = "secondOperand") double secondOperand,
-                             @RequestParam(name = "Addition", required = false) String addition,
-                             @RequestParam(name = "Subtraction", required = false) String subtraction,
-                             @RequestParam(name = "Multiplication", required = false) String multiplication,
-                             @RequestParam(name = "Division", required = false) String division,
+//                             @RequestParam(name = "Addition", required = false) String addition,
+//                             @RequestParam(name = "Subtraction", required = false) String subtraction,
+//                             @RequestParam(name = "Multiplication", required = false) String multiplication,
+//                             @RequestParam(name = "Division", required = false) String division,
+                             @RequestParam(name = "calculate") String calculate,
                              Model model
     ) {
         Double finalAnswer = null;
 
-        if (addition != null)
-            finalAnswer = this.addition(firstOperand,secondOperand);
+//        if (addition != null)
+//            finalAnswer = this.addition(firstOperand,secondOperand);
+//
+//        if (subtraction != null)
+//            finalAnswer = this.subtraction(firstOperand,secondOperand);
+//
+//        if (multiplication != null)
+//            finalAnswer = this.multiplication(firstOperand,secondOperand);
+//
+//        if (division != null)
+//            finalAnswer = this.division(firstOperand,secondOperand);
 
-        if (subtraction != null)
-            finalAnswer = this.subtraction(firstOperand,secondOperand);
+        switch (calculate) {
+            case "Addition":
+                finalAnswer = this.addition(firstOperand,secondOperand);
+                break;
 
-        if (multiplication != null)
-            finalAnswer = this.multiplication(firstOperand,secondOperand);
+            case "Subtraction":
+                finalAnswer = this.subtraction(firstOperand,secondOperand);
+                break;
 
-        if (division != null)
-            finalAnswer = this.division(firstOperand,secondOperand);
+            case "Multiplication":
+                finalAnswer = this.multiplication(firstOperand,secondOperand);
+                break;
+
+            case "Division":
+                finalAnswer = this.division(firstOperand,secondOperand);
+                break;
+        }
         
         model.addAttribute("firstOperand",firstOperand);
         model.addAttribute("secondOperand",secondOperand);

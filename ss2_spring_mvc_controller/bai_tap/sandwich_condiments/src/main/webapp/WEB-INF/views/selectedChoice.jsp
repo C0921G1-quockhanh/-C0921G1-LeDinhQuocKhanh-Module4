@@ -22,16 +22,16 @@
         </div>
 
         <div class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group">
-            <input type="checkbox" class="btn-check" id="lettuce" autocomplete="off" value="lettuce" name="lettuce">
+            <input type="checkbox" class="btn-check" id="lettuce" autocomplete="off" value="lettuce" name="condiments">
             <label class="btn btn-outline-secondary" for="lettuce">Lettuce</label>
 
-            <input type="checkbox" class="btn-check" id="tomato" autocomplete="off" value="tomato" name="tomato">
+            <input type="checkbox" class="btn-check" id="tomato" autocomplete="off" value="tomato" name="condiments">
             <label class="btn btn-outline-secondary" for="tomato">Tomato</label>
 
-            <input type="checkbox" class="btn-check" id="mustard" autocomplete="off" value="mustard" name="mustard">
+            <input type="checkbox" class="btn-check" id="mustard" autocomplete="off" value="mustard" name="condiments">
             <label class="btn btn-outline-secondary" for="mustard">Mustard</label>
 
-            <input type="checkbox" class="btn-check" id="sprouts" autocomplete="off" value="sprouts" name="sprouts">
+            <input type="checkbox" class="btn-check" id="sprouts" autocomplete="off" value="sprouts" name="condiments">
             <label class="btn btn-outline-secondary" for="sprouts">Sprouts</label>
         </div>
 
@@ -43,7 +43,6 @@
             <button type="submit" class="btn btn-secondary">Save</button>
         </div>
     </form>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
