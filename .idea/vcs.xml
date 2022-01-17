@@ -5,5 +5,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ss1_introduction_to_spring_MVC/thuc_hanh/customer-management" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ss2_spring_mvc_controller/thuc_hanh/customer-management" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ss5_database_ORM/thuc_hanh/customer-management" vcs="Git" />
   </component>
 </project>
