@@ -24,43 +24,83 @@
             <a th:href="@{/blog/create}" class="fw-bold text-dark text-decoration-none">Add new blog</a>
         </p>
 
-        <table class="table mb-3">
-            <thead class="bg-secondary">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Author</th>
-                <th scope="col">Brief Description</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">Category</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
-                <th scope="col">View</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="blog : ${blogs}">
-                <th scope="row" th:text="${blog.getId()}"></th>
-                <td th:text="${blog.getName()}"></td>
-                <td th:text="${blog.getAuthor()}"></td>
-                <td th:text="${blog.getBriefDescription()}"></td>
-                <td th:text="${blog.getDate()}"></td>
-                <td th:text="${blog.getCategory().getName()}"></td>
+        <div class="mb-3">
+            <form th:action="@{/blog}" method="get">
 
-                <td>
-                    <a th:href="@{/blog/{id}/edit(id=${blog.getId()})}" class="text-dark text-decoration-none">Edit</a>
-                </td>
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author: </label>
+                    <input type="text" class="form-control" id="author" name="author" placeholder="Type author name">
+                </div>
 
-                <td>
-                    <a th:href="@{/blog/{id}/delete(id=${blog.getId()})}" class="text-dark text-decoration-none">Delete</a>
-                </td>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category: </label><br>
 
-                <td>
-                    <a th:href="@{/blog/{id}/view(id=${blog.getId()})}" class="text-dark text-decoration-none">View</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    <select name="categoryID" id="category">
+                        <option disabled selected>-Choose category-</option>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    </select>
+                </div>
+
+                <input type="submit" value="Search">
+
+            </form>
+        </div>
+
+        <div class="mb-3">
+            <table class="table">
+                <thead class="bg-secondary">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Brief Description</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">View</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog : ${blogs}">
+                    <th scope="row" th:text="${blog.getId()}"></th>
+                    <td th:text="${blog.getName()}"></td>
+                    <td th:text="${blog.getAuthor()}"></td>
+                    <td th:text="${blog.getBriefDescription()}"></td>
+                    <td th:text="${blog.getDate()}"></td>
+                    <td th:text="${blog.getCategory().getName()}"></td>
+
+                    <td>
+                        <a th:href="@{/blog/{id}/edit(id=${blog.getId()})}" class="text-dark text-decoration-none">Edit</a>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/blog/{id}/delete(id=${blog.getId()})}" class="text-dark text-decoration-none">Delete</a>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/blog/{id}/view(id=${blog.getId()})}" class="text-dark text-decoration-none">View</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <a th:href="@{/blog(page=${blogs.number - 1},author=${author},categoryID=${categoryID})}" th:if="${blogs.hasPrevious()}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+
+            <span th:text="${blogs.number + 1}"></span> / <span th:text="${blogs.totalPages}"></span>
+
+            <a th:href="@{/blog(page=${blogs.number + 1},author=${author},categoryID=${categoryID})}" th:if="${blogs.hasNext()}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </div>
+
+
+
+
     </div>
 
 

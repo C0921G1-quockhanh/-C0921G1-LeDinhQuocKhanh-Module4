@@ -9,3 +9,10 @@ values
 ('Travel'),
 ('Money'),
 ('Writing');
+
+
+select *
+from blog;
+
+select *
+from category;

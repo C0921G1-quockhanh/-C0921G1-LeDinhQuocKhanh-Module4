@@ -19,6 +19,18 @@ public class Blog {
     public Blog() {
     }
 
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", briefDescription='" + briefDescription + '\'' +
+                ", date='" + date + '\'' +
+                ", category=" + category +
+                '}';
+    }
+
     public Blog(String name, String author, String briefDescription) {
         this.name = name;
         this.author = author;

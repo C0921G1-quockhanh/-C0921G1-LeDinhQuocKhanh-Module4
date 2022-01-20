@@ -1,6 +1,10 @@
 package qk.blog_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +14,6 @@ import qk.blog_management.model.Category;
 import qk.blog_management.repository.ICategoryRepository;
 import qk.blog_management.service.IBlogService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,9 +32,34 @@ public class BlogController {
     }
 
     @GetMapping(value = "")
-    public String list(Model model) {
-        Iterable<Blog> blogs = this.iBlogService.findAll();
+    public String list(Model model, @PageableDefault(size = 2,sort = {"date"}, direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(name = "author") Optional<String> author,
+                       @RequestParam(name = "categoryID") Optional<Integer> categoryID) {
+
+        boolean authorNotNull = author.isPresent() && !author.get().equals("");
+        boolean categoryNotNull = categoryID.isPresent();
+
+        if (authorNotNull)
+            model.addAttribute("author",author.get());
+
+        if (categoryNotNull)
+            model.addAttribute("categoryID",categoryID.get());
+
+        Page<Blog> blogs = null;
+
+        if (!authorNotNull && !categoryNotNull)
+            blogs = this.iBlogService.findAll(pageable);
+
+        if (authorNotNull && !categoryNotNull)
+            blogs = this.iBlogService.findAllByAuthor(author.get(),pageable);
+
+        if (!authorNotNull && categoryNotNull)
+            blogs = this.iBlogService.findAllByCategory_Id(categoryID.get(),pageable);
+
+        if (authorNotNull && categoryNotNull)
+            blogs = this.iBlogService.findAllByAuthorAndCategory_Id(author.get(),categoryID.get(),pageable);
+
         model.addAttribute("blogs",blogs);
+
         return "list";
     }
 
@@ -43,7 +71,9 @@ public class BlogController {
 
     @PostMapping(value = "/save")
     public String save(@ModelAttribute(name = "blog") Blog blog, RedirectAttributes redirectAttributes) {
+
         this.iBlogService.save(blog);
+
         redirectAttributes.addFlashAttribute("msg","Add new blog successfully!");
 
         return "redirect:/blog";
@@ -64,6 +94,7 @@ public class BlogController {
 
     @PostMapping(value = "/update")
     public String update(@ModelAttribute(name = "blog") Blog blog, RedirectAttributes redirectAttributes) {
+
         this.iBlogService.save(blog);
         redirectAttributes.addFlashAttribute("msg","Update blog successfully!");
         return "redirect:/blog";
