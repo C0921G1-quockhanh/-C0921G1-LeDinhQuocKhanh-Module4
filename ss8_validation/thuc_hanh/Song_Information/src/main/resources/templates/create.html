@@ -18,23 +18,26 @@
         </p>
 
         <div>
-            <form th:action="@{/song/save}" method="post" th:object="${song}">
+            <form th:action="@{/song/save}" method="post" th:object="${songDto}">
 
                 <input type="hidden" th:field="*{id}">
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Name: </label>
                     <input type="text" class="form-control" id="name" th:field="*{name}">
+                    <p th:erros="*{name}" th:if="${#fields.hasErrors('name')}" class="text-danger">Name Error</p>
                 </div>
 
                 <div class="mb-3">
                     <label for="artist" class="form-label">Artist: </label>
                     <input type="text" class="form-control" id="artist" th:field="*{artist}">
+                    <p th:erros="*{artist}" th:if="${#fields.hasErrors('artist')}" class="text-danger">Name Error</p>
                 </div>
 
                 <div class="mb-3">
                     <label for="typeOfSong" class="form-label">Type Of Song: </label>
                     <input type="text" class="form-control" id="typeOfSong" th:field="*{typeOfSong}">
+                    <p th:erros="*{typeOfSong}" th:if="${#fields.hasErrors('typeOfSong')}" class="text-danger">Name Error</p>
                 </div>
 
                 <input type="submit" value="Save">

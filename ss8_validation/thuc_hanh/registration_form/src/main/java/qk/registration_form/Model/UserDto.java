@@ -6,24 +6,24 @@ public class UserDto {
 
     protected Integer id;
 
-    @NotEmpty(message = "Name not empty")
+    @NotEmpty(message = "First name not empty")
     @Size(min = 5,max = 45,message = "Length from 5 to 45")
     protected String firstName;
 
-//    @NotEmpty
-//    @Size(min = 5,max = 45)
+    @NotEmpty(message = "Last name not empty")
+    @Size(min = 5,max = 45,message = "Length from 5 to 45")
     protected String lastName;
 
-//    @NotEmpty
-//    @Pattern(regexp = "^0[0-9]{9,10}$")
+    @NotEmpty(message = "Phone number not empty")
+    @Pattern(regexp = "^0[0-9]{9,10}$",message = "Phone number not follow the rules")
     protected String phoneNumber;
 
-//    @NotNull
-//    @Min(18)
+    @NotNull(message = "Age not empty")
+    @Min(value = 18,message = "Age greater than 18")
     protected Integer age;
 
-//    @NotEmpty
-//    @Email
+    @NotEmpty(message = "Email not empty")
+    @Email(message = "Email not follow the rules")
     protected String email;
 
     public UserDto() {
