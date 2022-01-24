@@ -58,7 +58,9 @@ public class SongController {
         Optional<Song> song = this.iSongService.findByID(id);
 
         if (song.isPresent()) {
-            model.addAttribute("song",song.get());
+            SongDto songDto = new SongDto();
+            BeanUtils.copyProperties(song.get(),songDto);
+            model.addAttribute("songDto",songDto);
             return "edit";
         } else {
             return "error.404";
@@ -66,10 +68,16 @@ public class SongController {
     }
 
     @PostMapping(value = "/update")
-    public String update(@ModelAttribute(name = "song") Song song, RedirectAttributes redirectAttributes) {
-        this.iSongService.save(song);
-        redirectAttributes.addFlashAttribute("msg","Update song successfully!");
-        return "redirect:/song";
+    public String update(@Validated @ModelAttribute(name = "songDto") SongDto songDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasFieldErrors())
+            return "edit";
+        else {
+            Song song = new Song();
+            BeanUtils.copyProperties(songDto,song);
+            this.iSongService.save(song);
+            redirectAttributes.addFlashAttribute("msg","Update song successfully!");
+            return "redirect:/song";
+        }
     }
 
 }

@@ -6,5 +6,7 @@
     <mapping directory="$PROJECT_DIR$/ss1_introduction_to_spring_MVC/thuc_hanh/customer-management" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ss2_spring_mvc_controller/thuc_hanh/customer-management" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ss5_database_ORM/thuc_hanh/customer-management" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ss9_spring_aop_exception_handle/bai_tap/customer-management" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ss9_spring_aop_exception_handle/thuc_hanh/customer-management" vcs="Git" />
   </component>
 </project>
