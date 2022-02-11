@@ -44,4 +44,14 @@ public class SmartphoneController {
         this.iSmartphoneService.remove(id);
         return new ResponseEntity<>(smartPhoneOptional.get(),HttpStatus.NO_CONTENT);
     }
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<SmartPhone> checkSmartphone(@PathVariable Long id) {
+//        Optional<SmartPhone> smartPhone = this.iSmartphoneService.findByID(id);
+//        if (smartPhone.isPresent()) {
+//            System.out.println("abc");
+//            return new ResponseEntity<>(smartPhone.get(),HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
 }
