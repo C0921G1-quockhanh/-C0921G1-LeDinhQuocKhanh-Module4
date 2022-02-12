@@ -14,4 +14,6 @@ public interface IBlogService {
 
     void remove(Integer id);
 
+    Iterable<Blog> findBlogsByCategory_Id(Integer categoryID);
+
 }

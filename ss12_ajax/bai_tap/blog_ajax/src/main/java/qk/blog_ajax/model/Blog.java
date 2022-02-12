@@ -13,7 +13,10 @@ public class Blog {
     protected Integer id;
     protected String name;
     protected String author;
+
+    @Column(columnDefinition = "LONGBLOB")
     protected String briefDescription;
+
     protected String date;
 
     @ManyToOne(targetEntity = Category.class)
