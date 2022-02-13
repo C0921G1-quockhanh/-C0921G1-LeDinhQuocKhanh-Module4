@@ -37,4 +37,11 @@ public class BlogService implements IBlogService {
     public Iterable<Blog> findBlogsByCategory_Id(Integer categoryID) {
         return this.iBlogRepository.findBlogsByCategory_Id(categoryID);
     }
+
+    @Override
+    public Iterable<Blog> findBlogsByAuthorContaining(String name) {
+        return this.iBlogRepository.findBlogsByAuthorContaining(name);
+    }
+
+
 }

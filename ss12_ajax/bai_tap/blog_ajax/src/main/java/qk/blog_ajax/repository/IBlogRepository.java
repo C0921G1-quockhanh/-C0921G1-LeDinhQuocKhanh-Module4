@@ -9,4 +9,6 @@ public interface IBlogRepository extends PagingAndSortingRepository<Blog,Integer
 
     Iterable<Blog> findBlogsByCategory_Id(Integer categoryID);
 
+    Iterable<Blog> findBlogsByAuthorContaining(String name);
+
 }

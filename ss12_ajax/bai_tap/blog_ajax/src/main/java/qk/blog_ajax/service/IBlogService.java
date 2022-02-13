@@ -16,4 +16,6 @@ public interface IBlogService {
 
     Iterable<Blog> findBlogsByCategory_Id(Integer categoryID);
 
+    Iterable<Blog> findBlogsByAuthorContaining(String name);
+
 }
