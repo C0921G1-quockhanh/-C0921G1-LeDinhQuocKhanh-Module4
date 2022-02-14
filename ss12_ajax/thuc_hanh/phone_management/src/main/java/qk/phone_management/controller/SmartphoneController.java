@@ -45,13 +45,28 @@ public class SmartphoneController {
         return new ResponseEntity<>(smartPhoneOptional.get(),HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<SmartPhone> checkSmartphone(@PathVariable Long id) {
-//        Optional<SmartPhone> smartPhone = this.iSmartphoneService.findByID(id);
-//        if (smartPhone.isPresent()) {
-//            System.out.println("abc");
-//            return new ResponseEntity<>(smartPhone.get(),HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
+    //cap nhat du lieu API
+    @GetMapping("/{id}")
+    public ModelAndView getSmartphone(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/phones/edit");
+
+        Optional<SmartPhone> smartPhoneOptional = this.iSmartphoneService.findByID(id);
+
+        if (smartPhoneOptional.isPresent())
+            modelAndView.addObject("smartphone",smartPhoneOptional.get());
+
+        return modelAndView;
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SmartPhone> updateSmartphone(@PathVariable Long id, @RequestBody SmartPhone smartPhone) {
+        Optional<SmartPhone> smartPhoneOptional = this.iSmartphoneService.findByID(id);
+
+        if (!smartPhoneOptional.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        smartPhone.setId(smartPhoneOptional.get().getId());
+        return new ResponseEntity<>(this.iSmartphoneService.save(smartPhone),HttpStatus.OK);
+    }
+
 }

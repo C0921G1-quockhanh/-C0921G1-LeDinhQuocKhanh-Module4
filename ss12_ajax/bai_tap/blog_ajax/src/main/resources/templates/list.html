@@ -63,7 +63,7 @@
 <!--            <form th:action="@{/blog}" method="get">-->
 
         <div class="mb-3">
-            <label for="searchAuthor" class="form-label">Author: </label>
+            <label for="searchAuthor" class="form-label">Search: </label>
             <input type="text" class="form-control" id="searchAuthor" placeholder="Type author name">
         </div>
 
@@ -119,17 +119,17 @@
             </table>
         </div>
 
-<!--        <div>-->
+        <div>
 <!--            <a th:href="@{/blog(page=${blogs.number - 1},author=${author},categoryID=${categoryID})}" th:if="${blogs.hasPrevious()}">-->
 <!--                <span aria-hidden="true">&laquo;</span>-->
 <!--            </a>-->
 
 <!--            <span th:text="${blogs.number + 1}"></span> / <span th:text="${blogs.totalPages}"></span>-->
 
-<!--            <a th:href="@{/blog(page=${blogs.number + 1},author=${author},categoryID=${categoryID})}" th:if="${blogs.hasNext()}">-->
-<!--                <span aria-hidden="true">&raquo;</span>-->
-<!--            </a>-->
-<!--        </div>-->
+            <a id="loading" th:href="@{/api(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}" class="text-dark" onclick="loadNextPage()">
+                Load More
+            </a>
+        </div>
 
     </div>
 
@@ -198,6 +198,9 @@
 
                     //xu ly khi thanh cong
                     success: function (data) {
+
+                        // console.log(data);
+
                         //hien thi danh sach tai day
                         let content = '<thead class="bg-secondary">' +
 
@@ -216,7 +219,7 @@
                                       '<tbody>';
 
                         for (let i = 0; i < data.length; i++) {
-                            console.log(data[i]);
+                            // console.log(data[i]);
                             content += getBlog(data[i]);
                         }
 
@@ -255,6 +258,115 @@
                 event.preventDefault();
             });
         })
+
+        $(document).ready(function () {
+            //su kien thuc hien ajax
+            $('#searchAuthor').keyup(function () {
+                //lay du lieu
+                let name = $('#searchAuthor').val();
+                console.log(name);
+
+                //goi ajax
+                $.ajax(
+                    {
+                        type: "GET",
+
+                        //ten API
+                        url: "/api/blog/" + name,
+
+                        //xu ly khi thanh cong
+                        success: function (data) {
+                            // console.log(data);
+
+                            //hien thi danh sach tai day
+                            let content = '<thead class="bg-secondary">' +
+
+                                '<tr>' +
+                                '<th scope="col">ID</th>' +
+                                '<th scope="col">Name</th>' +
+                                '<th scope="col">Author</th>' +
+                                '<th scope="col">Brief Description</th>' +
+                                '<th scope="col">Date</th>' +
+                                '<th scope="col">Category</th>' +
+                                '<th scope="col">Edit</th>' +
+                                '<th scope="col">Delete</th>' +
+                                '</tr>' +
+
+                                '</thead>' +
+                                '<tbody>';
+
+                            for (let i = 0; i < data.length; i++) {
+                                // console.log(data[i]);
+                                // console.log(data[i].name);
+                                // console.log(data[i].category.name);
+                                content += getBlog(data[i]);
+                            }
+
+                            content += '</tbody>';
+
+                            document.getElementById("list-blog").innerHTML = content;
+                        }
+                    }
+                );
+
+                //chan su kien mac dinh cua the
+                event.preventDefault();
+            });
+        })
+
+        let currentPage = 0;
+
+        function loadNextPage() {
+
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "/api?page=" + (currentPage+1),
+
+                    success: function (data) {
+
+
+                        currentPage = data.pageable.pageNumber;
+
+                        let pageSize = data.pageable.pageSize;
+                        if (currentPage >= pageSize) {
+                            $('#loading').hide();
+                        }
+
+                        // console.log(data);
+
+                        let content = '<thead class="bg-secondary">' +
+
+                            '<tr>' +
+                            '<th scope="col">ID</th>' +
+                            '<th scope="col">Name</th>' +
+                            '<th scope="col">Author</th>' +
+                            '<th scope="col">Brief Description</th>' +
+                            '<th scope="col">Date</th>' +
+                            '<th scope="col">Category</th>' +
+                            '<th scope="col">Edit</th>' +
+                            '<th scope="col">Delete</th>' +
+                            '</tr>' +
+
+                            '</thead>' +
+                            '<tbody>';
+
+                        for (let i = 0; i < data.content.length; i++) {
+                            // console.log(data.content[i]);
+                            // console.log(data[i].category.name);
+                            content += getBlog(data.content[i]);
+                        }
+
+                        content += '</tbody>';
+
+                        document.getElementById("list-blog").innerHTML = content;
+                    }
+                }
+            );
+
+            event.preventDefault();
+        }
+
 
     </script>
 

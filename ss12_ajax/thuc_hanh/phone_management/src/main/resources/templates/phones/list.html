@@ -69,32 +69,50 @@
                     '<td>' + smartphone.producer + '</td>'+
                     '<td>' + smartphone.model + '</td>'+
                     '<td>' + smartphone.price + '</td>'+
-                    '<td><a class="deleteSmartphone" href="'+smartphone.id+'">Delete</a></td>'+
+                    '<td><a id="deleteSmartphone-'+smartphone.id+'" onclick="deleteSmartphone('+smartphone.id+')">Delete</a></td>'+
                     '</tr>';
         }
 
-        $(document).ready(function () {
-            //su kien nao thuc hien ajax
-            $('.deleteSmartphone').click(function (event) {
-                //lay du lieu
-                let a = $(this);
-                let smartphoneId = a.attr("href");
+        // $(document).ready(function () {
+        //     //su kien nao thuc hien ajax
+        //     $('.deleteSmartphone').click(function (event) {
+        //
+        //         //chan su kien mac dinh cua the
+        //         event.preventDefault();
+        //
+        //         //lay du lieu
+        //         // let a = $(this);
+        //         // let smartphoneId = a.attr("href");
+        //
+        //         //goi ajax
+        //         // $.ajax(
+        //         //     {
+        //         //         type: "DELETE",
+        //         //         url: '/smartphones/' + smartphoneId,
+        //         //         success: function (data) {
+        //         //             a.parent().parent().remove();
+        //         //         }
+        //         //     }
+        //         // );
+        //
+        //
+        //     });
+        // })
 
-                //goi ajax
-                $.ajax(
-                    {
-                        type: "DELETE",
-                        url: '/smartphones/' + smartphoneId,
-                        success: function (data) {
-                            a.parent().parent().remove();
-                        }
+        function deleteSmartphone(id) {
+
+            let a = $('#deleteSmartphone-'+id);
+
+            $.ajax(
+                {
+                    type: "DELETE",
+                    url: '/smartphones/' + id,
+                    success: function (data) {
+                        a.parent().parent().remove();
                     }
-                );
-
-                //chan su kien mac dinh cua the
-                event.preventDefault();
-            });
-        })
+                }
+            );
+        }
 
     </script>
 
@@ -139,6 +157,7 @@
             <td>Model</td>
             <td>Price</td>
             <td>Delete</td>
+            <td>Edit</td>
         </tr>
 
         <th:block th:each="smartphone: ${smartphones}">
@@ -148,6 +167,9 @@
                 <td th:text="${smartphone.price}"></td>
                 <td>
                     <a class="deleteSmartphone" th:href="${smartphone.getId()}">Delete</a>
+                </td>
+                <td>
+                    <a class="editSmartphone" th:href="${smartphone.getId()}">Edit</a>
                 </td>
             </tr>
         </th:block>

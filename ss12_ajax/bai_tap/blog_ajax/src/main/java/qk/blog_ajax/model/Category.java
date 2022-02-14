@@ -1,5 +1,6 @@
 package qk.blog_ajax.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class Category {
     }
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference
+    @JsonIgnoreProperties("category")
     private List<Blog> blogs;
 
     public Category(Integer id) {

@@ -1,6 +1,10 @@
 package qk.blog_ajax.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -68,21 +72,35 @@ public class BlogController {
         return new ResponseEntity<>(blogs,HttpStatus.OK);
     }
 
-    @GetMapping("/{author}")
+    @GetMapping("/blog/{author}")
     public ResponseEntity<Iterable<Blog>> findBlogsByAuthorContaining(@PathVariable String author) {
         List<Blog> blogs = (List<Blog>) this.iBlogService.findBlogsByAuthorContaining(author);
 
         if (blogs.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+//        System.out.println(blogs.get(0).getCategory().getName());
+
+        return new ResponseEntity<>(blogs,HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Blog>> loadNextPage(@PageableDefault(size = 2,sort = "date",direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<Blog> blogs = this.iBlogService.findAll(pageable);
+
+        if (blogs.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        System.out.println(blogs);
+
         return new ResponseEntity<>(blogs,HttpStatus.OK);
     }
 
     //
     @GetMapping("/list")
-    public ModelAndView getAllBlogs() {
+    public ModelAndView getAllBlogs(@PageableDefault(size = 2,sort = "date", direction = Sort.Direction.ASC) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("list");
-        modelAndView.addObject("blogs",this.iBlogService.findAll());
+        modelAndView.addObject("blogs",this.iBlogService.findAll(pageable));
         modelAndView.addObject("categories",this.iCategoryRepository.findAll());
         return modelAndView;
     }

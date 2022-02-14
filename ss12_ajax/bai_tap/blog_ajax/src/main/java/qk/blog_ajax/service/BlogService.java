@@ -1,6 +1,8 @@
 package qk.blog_ajax.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import qk.blog_ajax.model.Blog;
 import qk.blog_ajax.repository.IBlogRepository;
@@ -16,6 +18,11 @@ public class BlogService implements IBlogService {
     @Override
     public Iterable<Blog> findAll() {
         return this.iBlogRepository.findAll();
+    }
+
+    @Override
+    public Page<Blog> findAll(Pageable pageable) {
+        return this.iBlogRepository.findAll(pageable);
     }
 
     @Override

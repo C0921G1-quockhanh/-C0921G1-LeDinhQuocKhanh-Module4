@@ -1,6 +1,7 @@
 package qk.blog_ajax.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class Blog {
     protected String date;
 
     @ManyToOne(targetEntity = Category.class)
-    @JsonBackReference
+    @JsonIgnoreProperties("blogs")
     private Category category;
 
     public Blog() {
