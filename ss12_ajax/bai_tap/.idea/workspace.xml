@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4a141e8e-cda0-4b3e-abb7-d534abccb695" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/blog_ajax/src/main/java/qk/blog_ajax/controller/BlogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/blog_ajax/src/main/java/qk/blog_ajax/controller/BlogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog_ajax/src/main/resources/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/blog_ajax/src/main/resources/templates/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ss1_introduction_to_spring_MVC/thuc_hanh/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../../ss1_introduction_to_spring_MVC/thuc_hanh/customer-management" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ss5_database_ORM/thuc_hanh/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../../ss5_database_ORM/thuc_hanh/customer-management" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ss9_spring_aop_exception_handle/bai_tap/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../../ss9_spring_aop_exception_handle/bai_tap/customer-management" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../ss9_spring_aop_exception_handle/thuc_hanh/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../../ss9_spring_aop_exception_handle/thuc_hanh/customer-management" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +37,7 @@
       <option name="presentableId" value="Default" />
       <updated>1644820682747</updated>
       <workItem from="1644820683995" duration="3000" />
+      <workItem from="1644998180576" duration="3000" />
     </task>
     <servers />
   </component>
