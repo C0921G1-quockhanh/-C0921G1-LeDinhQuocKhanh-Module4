@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Authorize Thymeleaf</title>
+</head>
+<body>
+
+    <h1>Practice Authorize Thymeleaf</h1>
+
+    <div>
+        <h3>Welcome!</h3>
+        <div sec:authorize="isAuthenticated()">
+            <span sec:authentication="principal.username"></span>
+        </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('USER')">
+            <p style="color: blue">I am user</p>
+        </div>
+
+        <div sec:authorize="hasRole('ADMIN')">
+            <p style="color: red">I am admin</p>
+        </div>
+    </div>
+
+</body>
+</html>
