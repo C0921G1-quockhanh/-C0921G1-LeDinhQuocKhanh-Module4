@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import qk.furama_resort.model.*;
 import qk.furama_resort.repository.*;
 import qk.furama_resort.service.employee.IEmployeeService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/employee")
@@ -63,6 +63,48 @@ public class EmployeeController {
     public String addForm(Model model) {
         model.addAttribute("employee",new Employee());
         return "/employee/create";
+    }
+
+    @PostMapping(value = "/save")
+    public String saveEmployee(@ModelAttribute(name = "employee") Employee employee) {
+        this.iEmployeeService.save(employee);
+        return "redirect:/employee/";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable Integer id, Model model) {
+        Optional<Employee> employeeOptional = this.iEmployeeService.findByID(id);
+
+        if (employeeOptional.isPresent()) {
+            model.addAttribute("employee",employeeOptional.get());
+            return "/employee/edit";
+        } else {
+            return "error.404";
+        }
+    }
+
+    @PostMapping(value = "/update")
+    public String editEmployee(@ModelAttribute(name = "employee") Employee employee) {
+        this.iEmployeeService.save(employee);
+        return "redirect:/employee/";
+    }
+
+    @GetMapping(value = "/{id}/delete")
+    public String deleteForm(@PathVariable Integer id, Model model) {
+        Optional<Employee> employeeOptional = this.iEmployeeService.findByID(id);
+
+        if (employeeOptional.isPresent()) {
+            model.addAttribute("employee",employeeOptional.get());
+            return "/employee/delete";
+        } else {
+            return "error.404";
+        }
+    }
+
+    @PostMapping(value = "/delete")
+    public String deleteEmployee(@ModelAttribute(name = "employee") Employee employee) {
+        this.iEmployeeService.remove(employee.getEmployeeID());
+        return "redirect:/employee/";
     }
 
 }
