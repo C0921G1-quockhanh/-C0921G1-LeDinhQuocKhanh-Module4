@@ -15,6 +15,11 @@ public class CService implements IService {
     private IServiceRepository iServiceRepository;
 
     @Override
+    public Iterable<qk.furama_resort.model.Service> findAll() {
+        return this.iServiceRepository.findAll();
+    }
+
+    @Override
     public Page<qk.furama_resort.model.Service> findAll(Pageable pageable) {
         return this.iServiceRepository.findAll(pageable);
     }

@@ -16,6 +16,11 @@ public class ContractService implements IContractService {
     private IContractRepository iContractRepository;
 
     @Override
+    public Iterable<Contract> findAll() {
+        return this.iContractRepository.findAll();
+    }
+
+    @Override
     public Page<Contract> findAll(Pageable pageable) {
         return this.iContractRepository.findAll(pageable);
     }

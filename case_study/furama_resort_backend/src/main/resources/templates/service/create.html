@@ -97,21 +97,25 @@
                             <div class="mb-3">
                                 <label for="serviceName" class="form-label">Service Name: </label>
                                 <input type="text" class="form-control" id="serviceName" th:field="*{serviceName}">
+                                <p th:errors="*{serviceName}" th:if="${#fields.hasErrors('serviceName')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
                                 <label for="serviceArea" class="form-label">Service Area: </label>
                                 <input type="text" class="form-control" id="serviceArea" th:field="*{serviceArea}">
+                                <p th:errors="*{serviceArea}" th:if="${#fields.hasErrors('serviceArea')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
                                 <label for="rentalCost" class="form-label">Rental Cost: </label>
                                 <input type="text" class="form-control" id="rentalCost" th:field="*{rentalCost}">
+                                <p th:errors="*{rentalCost}" th:if="${#fields.hasErrors('rentalCost')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
                                 <label for="maxPeople" class="form-label">Max People: </label>
                                 <input type="text" class="form-control" id="maxPeople" th:field="*{maxPeople}">
+                                <p th:errors="*{maxPeople}" th:if="${#fields.hasErrors('maxPeople')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
@@ -133,21 +137,25 @@
                             <div class="mb-3">
                                 <label for="roomStandard" class="form-label">Room Standard: </label>
                                 <input type="text" class="form-control" id="roomStandard" th:field="*{roomStandard}">
+                                <p th:errors="*{roomStandard}" th:if="${#fields.hasErrors('roomStandard')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
                                 <label for="extraAmenity" class="form-label">Extra Amenity: </label>
                                 <input type="text" class="form-control" id="extraAmenity" th:field="*{extraAmenity}">
+                                <p th:errors="*{extraAmenity}" th:if="${#fields.hasErrors('extraAmenity')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
                                 <label for="poolArea" class="form-label">Pool Area: </label>
                                 <input type="text" class="form-control" id="poolArea" th:field="*{poolArea}">
+                                <p th:errors="*{poolArea}" th:if="${#fields.hasErrors('poolArea')}" class="text-danger">Name Error</p>
                             </div>
 
                             <div class="mb-3">
                                 <label for="levels" class="form-label">Levels: </label>
                                 <input type="text" class="form-control" id="levels" th:field="*{levels}">
+                                <p th:errors="*{levels}" th:if="${#fields.hasErrors('levels')}" class="text-danger">Name Error</p>
                             </div>
 
                             <button type="submit" class="btn btn-secondary">Add New Service</button>

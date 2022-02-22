@@ -1,13 +1,17 @@
 package qk.furama_resort.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import qk.furama_resort.Dto.CustomerDto;
 import qk.furama_resort.model.*;
 import qk.furama_resort.repository.ICustomerTypeRepository;
 import qk.furama_resort.repository.IDepartmentRepository;
@@ -41,14 +45,23 @@ public class CustomerController {
 
     @GetMapping(value = "/create")
     public String addForm(Model model) {
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", new CustomerDto());
         return "/customer/create";
     }
 
     @PostMapping(value = "/save")
-    public String saveCustomer(@ModelAttribute(name = "customer") Customer customer) {
-        this.iCustomerService.save(customer);
-        return "redirect:/customer/";
+    public String saveCustomer(@Validated @ModelAttribute(name = "customer") CustomerDto customerDto, BindingResult bindingResult) {
+        //dua phuong thuc validate vao controller
+        new CustomerDto().validate(customerDto,bindingResult);
+
+        if (bindingResult.hasFieldErrors())
+            return "/customer/create";
+        else {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto,customer);
+            this.iCustomerService.save(customer);
+            return "redirect:/customer/";
+        }
     }
 
     @GetMapping(value = "/{id}/edit")

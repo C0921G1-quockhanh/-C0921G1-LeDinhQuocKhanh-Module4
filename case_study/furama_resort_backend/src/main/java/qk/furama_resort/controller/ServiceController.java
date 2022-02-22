@@ -1,15 +1,19 @@
 package qk.furama_resort.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import qk.furama_resort.Dto.ServiceDto;
 import qk.furama_resort.model.RentalType;
 import qk.furama_resort.model.Service;
 import qk.furama_resort.model.ServiceType;
@@ -49,14 +53,23 @@ public class ServiceController {
 
     @GetMapping(value = "/create")
     public String addForm(Model model) {
-        model.addAttribute("service", new Service());
+        model.addAttribute("service", new ServiceDto());
         return "/service/create";
     }
 
     @PostMapping(value = "/save")
-    public String saveService(@ModelAttribute(name = "service") Service service) {
-        this.iService.save(service);
-        return "redirect:/service/";
+    public String saveService(@Validated @ModelAttribute(name = "service") ServiceDto serviceDto, BindingResult bindingResult) {
+        //phuong thuc validate
+        new ServiceDto().validate(serviceDto,bindingResult);
+
+        if (bindingResult.hasFieldErrors())
+            return "/service/create";
+        else {
+            Service service = new Service();
+            BeanUtils.copyProperties(serviceDto,service);
+            this.iService.save(service);
+            return "redirect:/service/";
+        }
     }
 
 }

@@ -1,12 +1,16 @@
 package qk.furama_resort.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import qk.furama_resort.Dto.EmployeeDto;
 import qk.furama_resort.model.*;
 import qk.furama_resort.repository.*;
 import qk.furama_resort.service.employee.IEmployeeService;
@@ -61,14 +65,23 @@ public class EmployeeController {
 
     @GetMapping(value = "/create")
     public String addForm(Model model) {
-        model.addAttribute("employee",new Employee());
+        model.addAttribute("employee", new EmployeeDto());
         return "/employee/create";
     }
 
     @PostMapping(value = "/save")
-    public String saveEmployee(@ModelAttribute(name = "employee") Employee employee) {
-        this.iEmployeeService.save(employee);
-        return "redirect:/employee/";
+    public String saveEmployee(@Validated @ModelAttribute(name = "employee") EmployeeDto employeeDto, BindingResult bindingResult) {
+        //dua phuong thuc validate vao controller
+        new EmployeeDto().validate(employeeDto,bindingResult);
+
+        if (bindingResult.hasFieldErrors())
+            return "/employee/create";
+        else {
+            Employee employee = new Employee();
+            BeanUtils.copyProperties(employeeDto,employee);
+            this.iEmployeeService.save(employee);
+            return "redirect:/employee/";
+        }
     }
 
     @GetMapping("/{id}/edit")

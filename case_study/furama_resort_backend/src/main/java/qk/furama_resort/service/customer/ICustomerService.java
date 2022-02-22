@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ICustomerService {
 
+    public Iterable<Customer> findAll();
+
     public Page<Customer> findAll(Pageable pageable);
 
     public Optional<Customer> findByID(Integer id);
