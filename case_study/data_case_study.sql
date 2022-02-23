@@ -30,18 +30,18 @@ values
 
 select * from department;
 
-insert into `user`(user_name,user_password)
+insert into `user`(user_name)
 values
-('An@codegym','123456'),
-('Binh@codegym','123456'),
-('Yen@codegym','123456'),
-('Toan@codegym','123456'),
-('Phat@codegym','123456'),
-('Nghi@codegym','123456'),
-('Ha@codegym','123456'),
-('Dong@codegym','123456'),
-('Hoang@codegym','123456'),
-('Dao@codegym','123456');
+('An@codegym'),
+('Binh@codegym'),
+('Yen@codegym'),
+('Toan@codegym'),
+('Phat@codegym'),
+('Nghi@codegym'),
+('Ha@codegym'),
+('Dong@codegym'),
+('Hoang@codegym'),
+('Dao@codegym');
 
 select *
 from `user`;
@@ -172,3 +172,45 @@ values
 
 select *
 from detail_contract;
+
+insert into role(role_name)
+values
+('ROLE_DIRECTOR'),
+('ROLE_MANAGER'),
+('ROLE_EMPLOYEE');
+
+select *
+from role;
+
+insert into user_role(user_id,role_id)
+values
+(1,1),
+(2,2),
+(3,3);
+
+select *
+from user_role;
+
+alter table contract
+drop foreign key FKdglchynnxdr5r3xs9suiw08dj;
+
+alter table contract
+add constraint contract_customer_fk
+	foreign key(customer_customerid)
+		references customer(customerid) on delete cascade;
+        
+alter table contract
+drop foreign key FK77x3q5wrgme9bjq29uv0sgsvy;
+
+alter table contract
+add constraint contract_employee_fk
+	foreign key(employee_employeeid)
+		references employee(employeeid) on delete cascade;
+        
+alter table detail_contract
+drop foreign key FK8otdca4mreko7eypmourg1y03;
+
+alter table detail_contract
+add constraint dcontract_contract_fk
+	foreign key(contract_contractid)
+		references contract(contractid) on delete cascade;

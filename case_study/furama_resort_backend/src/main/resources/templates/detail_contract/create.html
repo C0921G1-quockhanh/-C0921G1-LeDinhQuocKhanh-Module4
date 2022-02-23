@@ -60,10 +60,10 @@
                                         </li>
                                     </ul>
 
-                                    <form class="d-flex position-absolute top-50 end-0 translate-middle-y">
-                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                        <button class="btn btn-outline-success text-dark" type="submit">Search</button>
-                                    </form>
+<!--                                    <form class="d-flex position-absolute top-50 end-0 translate-middle-y">-->
+<!--                                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                                        <button class="btn btn-outline-success text-dark" type="submit">Search</button>-->
+<!--                                    </form>-->
                                 </div>
                             </div>
                         </nav>
@@ -113,6 +113,7 @@
                             <div class="mb-3">
                                 <label for="quantity" class="form-label">Quantity: </label>
                                 <input type="text" class="form-control" id="quantity" th:field="*{quantity}">
+                                <p th:errors="*{quantity}" th:if="${#fields.hasErrors('quantity')}" class="text-danger">Name Error</p>
                             </div>
 
                             <button type="submit" class="btn btn-secondary">Add New Detail Contract</button>

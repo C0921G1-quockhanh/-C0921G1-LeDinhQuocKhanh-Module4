@@ -39,12 +39,26 @@ public class RegexPattern {
         return isRetry;
     }
 
-//    public static boolean validatePositiveInteger(String positiveInteger) {
-//        pattern = Pattern.compile(REGEX_POSITIVE_INTEGER);
-//        matcher = pattern.matcher(positiveInteger);
-//
-//        return matcher.matches();
-//    }
+    public static boolean validateDateContract(String startDate, String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        boolean isRetry = false;
+
+        pattern = Pattern.compile(REGEX_TIME);
+        matcher = pattern.matcher(startDate);
+        matcher = pattern.matcher(endDate);
+
+        if (!matcher.matches())
+            isRetry = true;
+        else {
+            LocalDate start = LocalDate.parse(startDate,formatter);
+            LocalDate end = LocalDate.parse(endDate,formatter);
+
+            if (start.isAfter(end))
+                isRetry = true;
+        }
+
+        return isRetry;
+    }
 
     public static boolean validatePositive(Double number) {
         return number > 0;

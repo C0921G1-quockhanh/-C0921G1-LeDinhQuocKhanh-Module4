@@ -6,4 +6,7 @@ import qk.furama_resort.model.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User,Integer> {
+
+    User findByUserName(String username);
+
 }

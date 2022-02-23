@@ -1,15 +1,19 @@
 package qk.furama_resort.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import qk.furama_resort.Dto.DetailContractDto;
 import qk.furama_resort.model.AccompaniedService;
 import qk.furama_resort.model.Contract;
 import qk.furama_resort.model.DetailContract;
@@ -42,14 +46,24 @@ public class DetailContractController {
 
     @GetMapping(value = "/create")
     public String addForm(Model model) {
-        model.addAttribute("detailContract", new DetailContract());
+        model.addAttribute("detailContract", new DetailContractDto());
         return "/detail_contract/create";
     }
 
     @PostMapping(value = "/save")
-    public String saveDetailContract(@ModelAttribute(name = "detailContract") DetailContract detailContract) {
-        this.iDetailContractService.save(detailContract);
-        return "redirect:/contract/";
+    public String saveDetailContract(@Validated @ModelAttribute(name = "detailContract") DetailContractDto detailContractDto, BindingResult bindingResult) {
+
+        new DetailContractDto().validate(detailContractDto,bindingResult);
+
+        if (bindingResult.hasFieldErrors())
+            return "/detail_contract/create";
+        else {
+            DetailContract detailContract = new DetailContract();
+            BeanUtils.copyProperties(detailContractDto,detailContract);
+            this.iDetailContractService.save(detailContract);
+            return "redirect:/contract/";
+        }
+
     }
 
 
