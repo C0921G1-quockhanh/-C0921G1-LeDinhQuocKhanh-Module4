@@ -18,4 +18,10 @@ public interface IEmployeeService {
 
     public void remove(Integer id);
 
+    Page<Employee> findByEmployeeNameContaining(String employeeName, Pageable pageable);
+
+    Page<Employee> findByPosition_PositionID(Integer positionID, Pageable pageable);
+
+    Page<Employee> findByEmployeeNameContainingAndPosition_PositionID(String employeeName, Integer positionID, Pageable pageable);
+
 }

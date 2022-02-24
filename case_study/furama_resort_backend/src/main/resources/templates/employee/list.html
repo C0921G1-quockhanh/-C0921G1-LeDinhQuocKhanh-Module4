@@ -145,13 +145,13 @@
 
                 <div class="row">
                     <div class="col-xl-12">
-                        <a th:href="@{/employee(page=${employees.number - 1})}" th:if="${employees.hasPrevious()}">
+                        <a th:href="@{/employee(page=${employees.number - 1}, employeeName = ${employeeName}, positionID = ${positionID})}" th:if="${employees.hasPrevious()}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
 
                         <span th:text="${employees.number + 1}"></span> / <span th:text="${employees.totalPages}"></span>
 
-                        <a th:href="@{/employee(page=${employees.number + 1})}" th:if="${employees.hasNext()}">
+                        <a th:href="@{/employee(page=${employees.number + 1}, employeeName = ${employeeName}, positionID = ${positionID})}" th:if="${employees.hasNext()}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </div>
@@ -166,6 +166,30 @@
                         <a th:href="@{/employee/create}" class="text-dark text-decoration-none fw-bold ms-2">Add new employee? Click here!</a>
                     </div>
                 </div>
+
+                <div class="mt-3 mb-3">
+                    <form th:action="@{/employee}" method="get">
+
+                        <div class="mb-3">
+                            <label for="employeeName" class="form-label">Employee Name: </label>
+                            <input type="text" class="form-control" id="employeeName" name="employeeName" placeholder="Type employee name" th:value="${employeeName}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="positionID" class="form-label">Position: </label><br>
+
+                            <select name="positionID" id="positionID">
+                                <option disabled selected>-Choose position-</option>
+                                <option th:each="position : ${positions}" th:value="${position.positionID}" th:text="${position.positionName}" th:selected="${positionID} == ${position.positionID}"></option>
+                            </select>
+                        </div>
+
+                        <input type="submit" value="Search">
+
+                    </form>
+                </div>
+
+
 
             </div>
         </div>

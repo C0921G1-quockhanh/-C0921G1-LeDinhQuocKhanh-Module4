@@ -38,4 +38,19 @@ public class CService implements IService {
     public void remove(Integer id) {
         this.iServiceRepository.deleteById(id);
     }
+
+    @Override
+    public Page<qk.furama_resort.model.Service> findByServiceNameContaining(String serviceName, Pageable pageable) {
+        return this.iServiceRepository.findByServiceNameContaining(serviceName, pageable);
+    }
+
+    @Override
+    public Page<qk.furama_resort.model.Service> findByServiceType_ServiceTypeID(Integer serviceTypeID, Pageable pageable) {
+        return this.iServiceRepository.findByServiceType_ServiceTypeID(serviceTypeID, pageable);
+    }
+
+    @Override
+    public Page<qk.furama_resort.model.Service> findByServiceNameContainingAndServiceType_ServiceTypeID(String serviceName, Integer serviceTypeID, Pageable pageable) {
+        return this.iServiceRepository.findByServiceNameContainingAndServiceType_ServiceTypeID(serviceName, serviceTypeID, pageable);
+    }
 }

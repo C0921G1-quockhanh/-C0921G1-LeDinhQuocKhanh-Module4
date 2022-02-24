@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import qk.furama_resort.Dto.ServiceDto;
 import qk.furama_resort.model.RentalType;
 import qk.furama_resort.model.Service;
@@ -20,6 +17,8 @@ import qk.furama_resort.model.ServiceType;
 import qk.furama_resort.repository.IRentalTypeRepository;
 import qk.furama_resort.repository.IServiceTypeRepository;
 import qk.furama_resort.service.service.IService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/service")
@@ -45,8 +44,33 @@ public class ServiceController {
     }
 
     @GetMapping(value = "")
-    public String getAllServices(Model model, @PageableDefault(size = 4)Pageable pageable) {
-        Page<Service> services = this.iService.findAll(pageable);
+    public String getAllServices(Model model, @PageableDefault(size = 4)Pageable pageable,
+                                 @RequestParam(name = "serviceName")Optional<String> serviceName,
+                                 @RequestParam(name = "serviceTypeID") Optional<Integer> serviceTypeID) {
+
+        boolean nameNotNull = serviceName.isPresent() && !serviceName.get().equals("");
+        boolean idNotNull = serviceTypeID.isPresent();
+
+        if (nameNotNull)
+            model.addAttribute("serviceName",serviceName.get());
+
+        if (idNotNull)
+            model.addAttribute("serviceTypeID",serviceTypeID.get());
+
+        Page<Service> services = null;
+
+        if (!nameNotNull && !idNotNull)
+            services = this.iService.findAll(pageable);
+
+        if (nameNotNull && !idNotNull)
+            services = this.iService.findByServiceNameContaining(serviceName.get(),pageable);
+
+        if (!nameNotNull && idNotNull)
+            services = this.iService.findByServiceType_ServiceTypeID(serviceTypeID.get(),pageable);
+
+        if (nameNotNull && idNotNull)
+            services = this.iService.findByServiceNameContainingAndServiceType_ServiceTypeID(serviceName.get(),serviceTypeID.get(),pageable);
+
         model.addAttribute("services",services);
         return "/service/list";
     }

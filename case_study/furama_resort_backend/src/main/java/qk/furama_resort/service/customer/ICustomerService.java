@@ -18,4 +18,10 @@ public interface ICustomerService {
 
     public void remove(Integer id);
 
+    public Page<Customer> findByCustomerNameContaining(String customerName, Pageable pageable);
+
+    public Page<Customer> findByAddressContaining(String address, Pageable pageable);
+
+    public Page<Customer> findByCustomerNameContainingAndAddressContaining(String customerName, String address, Pageable pageable);
+
 }

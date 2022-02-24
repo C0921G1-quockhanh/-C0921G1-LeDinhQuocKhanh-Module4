@@ -57,10 +57,36 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "")
-    public String getAllEmployees(Model model, @PageableDefault(size = 4)Pageable pageable) {
-        Page<Employee> employees = this.iEmployeeService.findAll(pageable);
+    public String getAllEmployees(Model model, @PageableDefault(size = 4)Pageable pageable,
+                                  @RequestParam(name = "employeeName") Optional<String> employeeName,
+                                  @RequestParam(name = "positionID") Optional<Integer> positionID) {
+
+        boolean nameNotNull = employeeName.isPresent() && !employeeName.get().equals("");
+        boolean idNotNull = positionID.isPresent();
+
+        if (nameNotNull)
+            model.addAttribute("employeeName",employeeName.get());
+
+        if (idNotNull)
+            model.addAttribute("positionID",positionID.get());
+
+        Page<Employee> employees = null;
+
+        if (!nameNotNull && !idNotNull)
+            employees = this.iEmployeeService.findAll(pageable);
+
+        if (nameNotNull && !idNotNull)
+            employees = this.iEmployeeService.findByEmployeeNameContaining(employeeName.get(),pageable);
+
+        if (!nameNotNull && idNotNull)
+            employees = this.iEmployeeService.findByPosition_PositionID(positionID.get(),pageable);
+
+        if (nameNotNull && idNotNull)
+            employees = this.iEmployeeService.findByEmployeeNameContainingAndPosition_PositionID(employeeName.get(),positionID.get(),pageable);
+
         model.addAttribute("employees",employees);
         return "/employee/list";
+
     }
 
     @GetMapping(value = "/create")

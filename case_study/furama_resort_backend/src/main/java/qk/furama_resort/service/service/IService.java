@@ -18,4 +18,11 @@ public interface IService {
 
     public void remove(Integer id);
 
+    public Page<Service> findByServiceNameContaining(String serviceName, Pageable pageable);
+
+    public Page<Service> findByServiceType_ServiceTypeID(Integer serviceTypeID, Pageable pageable);
+
+    public Page<Service> findByServiceNameContainingAndServiceType_ServiceTypeID(String serviceName, Integer serviceTypeID, Pageable pageable);
+
+
 }

@@ -39,4 +39,19 @@ public class CustomerService implements ICustomerService {
     public void remove(Integer id) {
         this.iCustomerRepository.deleteById(id);
     }
+
+    @Override
+    public Page<Customer> findByCustomerNameContaining(String customerName, Pageable pageable) {
+        return this.iCustomerRepository.findByCustomerNameContaining(customerName,pageable);
+    }
+
+    @Override
+    public Page<Customer> findByAddressContaining(String address, Pageable pageable) {
+        return this.iCustomerRepository.findByAddressContaining(address,pageable);
+    }
+
+    @Override
+    public Page<Customer> findByCustomerNameContainingAndAddressContaining(String customerName, String address, Pageable pageable) {
+        return this.iCustomerRepository.findByCustomerNameContainingAndAddressContaining(customerName,address,pageable);
+    }
 }

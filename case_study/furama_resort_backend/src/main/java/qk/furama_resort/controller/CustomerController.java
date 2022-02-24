@@ -37,9 +37,35 @@ public class CustomerController {
     }
 
     @GetMapping(value = "")
-    public String getAllCustomers(Model model, @PageableDefault(size = 4) Pageable pageable) {
-        Page<Customer> customers = this.iCustomerService.findAll(pageable);
+    public String getAllCustomers(Model model, @PageableDefault(size = 4) Pageable pageable,
+                                  @RequestParam(name = "customerName") Optional<String> customerName,
+                                  @RequestParam(name = "address") Optional<String> address) {
+
+        boolean nameNotNull = customerName.isPresent() && !customerName.get().equals("");
+        boolean addressNotNull = address.isPresent() && !address.get().equals("");
+
+        if (nameNotNull)
+            model.addAttribute("customerName",customerName.get());
+
+        if (addressNotNull)
+            model.addAttribute("address",address.get());
+
+        Page<Customer> customers = null;
+
+        if (!nameNotNull && !addressNotNull)
+            customers = this.iCustomerService.findAll(pageable);
+
+        if (nameNotNull && !addressNotNull)
+            customers = this.iCustomerService.findByCustomerNameContaining(customerName.get(),pageable);
+
+        if (!nameNotNull && addressNotNull)
+            customers = this.iCustomerService.findByAddressContaining(address.get(),pageable);
+
+        if (nameNotNull && addressNotNull)
+            customers = this.iCustomerService.findByCustomerNameContainingAndAddressContaining(customerName.get(),address.get(),pageable);
+
         model.addAttribute("customers",customers);
+
         return "/customer/list";
     }
 

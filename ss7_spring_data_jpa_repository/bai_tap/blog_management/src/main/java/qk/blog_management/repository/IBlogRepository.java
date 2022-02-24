@@ -8,7 +8,7 @@ import qk.blog_management.model.Blog;
 import qk.blog_management.model.Category;
 
 @Repository
-public interface IBlogRepository extends PagingAndSortingRepository<Blog,Integer> {
+public interface    IBlogRepository extends PagingAndSortingRepository<Blog,Integer> {
 
     Page<Blog> findAllByAuthor(String author,Pageable pageable);
 
